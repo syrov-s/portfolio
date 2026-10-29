@@ -553,22 +553,22 @@ footer {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 1.5rem;
     margin-top: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .project-tags span {
-    background: rgba(255, 42, 42, 0.1); /* Прозрачный красный фон */
-    color: var(--accent);               /* Ярко-красный текст */
+    background: rgba(255, 42, 42, 0.1);
+    color: var(--accent);
     padding: 0.3rem 0.8rem;
-    border-radius: 20px;                /* Округлые края */
+    border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 600;
     border: 1px solid rgba(255, 42, 42, 0.3);
     transition: all 0.2s ease;
+    display: inline-block; /* Важно, чтобы плашка облегала текст */
 }
 
-/* Эффект при наведении на плашку (активность) */
 .project-tags span:hover {
     background: var(--accent);
     color: #fff;
