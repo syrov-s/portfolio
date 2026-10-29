@@ -141,7 +141,7 @@ if (cursorDot && cursorRing) {
     });
 }
 
-// ========== ЗВЁЗДНЫЙ ФОН (КРАСНЫЕ ИСКРЫ) ==========
+// ========== ЗВЁЗДНЫЙ ФОН ==========
 if (canvas) {
     const ctx = canvas.getContext('2d');
     let stars = [];
@@ -169,8 +169,8 @@ if (canvas) {
         stars.forEach(s => {
             ctx.beginPath();
             ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-            // Красные искры
-            ctx.fillStyle = 'rgba(255, 80, 80, ' + s.a + ')';
+            // Делаем искры чуть более розовыми в тон новому акценту
+            ctx.fillStyle = 'rgba(255, 100, 150, ' + s.a + ')';
             ctx.fill();
             s.y += s.speed;
             if (s.y > canvas.height) {

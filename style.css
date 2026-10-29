@@ -3,21 +3,25 @@
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
-    cursor: none !important; /* Прячем стандартный курсор везде */
+    cursor: none !important;
 }
 
 :root {
-    --bg: #0a0a0a;          /* Глубокий черный */
-    --card: #141414;        /* Темно-серый для карточек */
-    --text: #f0f0f0;        /* Белый текст */
-    --muted: #888888;       /* Серый для второстепенного */
-    --accent: #ff2a2a;      /* Яркий красный */
-    --accent-hover: #cc1f1f;/* Темно-красный */
+    --bg: #0b0c10;          /* Глубокий графитовый */
+    --card: #15171e;        /* Цвет карточек */
+    --text: #f4f4f5;        /* Мягкий белый */
+    --muted: #8b8e9d;       /* Серо-голубой для текста */
+    --accent: #ff3366;      /* Неоновый малиново-коралловый */
+    --accent-hover: #e62959;/* Темнее для наведения */
+    --border: #262936;      /* Мягкие рамки */
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    background: var(--bg);
+    background-color: var(--bg);
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(106, 76, 255, 0.08), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(255, 51, 102, 0.08), transparent 25%);
     color: var(--text);
     line-height: 1.6;
     transition: background 0.3s, color 0.3s;
@@ -26,23 +30,16 @@ body {
 
 body.no-scroll { overflow: hidden; }
 
-/* Светлая тема (инвертированная) */
+/* Светлая тема */
 body.light {
-    --bg: #ffffff;
-    --card: #f4f4f4;
-    --text: #111111;
-    --muted: #555555;
-    --accent: #e60000;
-    --accent-hover: #b30000;
+    --bg: #f8f9fa;
+    --card: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --border: #e5e7eb;
 }
 
-body.light .navbar { background: rgba(255, 255, 255, 0.85); }
-body.light .skill-track { background: #e0e0e0; }
-body.light .project-card .tilt-inner,
-body.light .stat,
-body.light .contacts a,
-body.light .theme-toggle { border-color: #dddddd; }
-body.light footer { border-top-color: #dddddd; }
+body.light .navbar { background: rgba(248, 249, 250, 0.85); }
 body.light .burger span { background: var(--text); }
 
 /* ========== НАВИГАЦИЯ ========== */
@@ -53,7 +50,7 @@ body.light .burger span { background: var(--text); }
     justify-content: space-between;
     align-items: center;
     padding: 1rem 5%;
-    background: rgba(10, 10, 10, 0.85);
+    background: rgba(11, 12, 16, 0.85);
     backdrop-filter: blur(10px);
     z-index: 100;
 }
@@ -62,7 +59,7 @@ body.light .burger span { background: var(--text); }
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-left: auto; /* Прижимает кнопки вправо */
+    margin-left: auto;
 }
 
 .nav-links {
@@ -109,7 +106,7 @@ body.light .burger span { background: var(--text); }
 /* ========== ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ========== */
 .theme-toggle {
     background: var(--card);
-    border: 1px solid #333;
+    border: 1px solid var(--border);
     color: var(--text);
     width: 40px;
     height: 40px;
@@ -143,7 +140,7 @@ body.light .burger span { background: var(--text); }
     position: absolute;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(255, 42, 42, 0.15), transparent 70%);
+    background: radial-gradient(circle, rgba(255, 51, 102, 0.15), transparent 70%);
     border-radius: 50%;
     filter: blur(60px);
     animation: float 8s ease-in-out infinite;
@@ -179,8 +176,10 @@ body.light .burger span { background: var(--text); }
 }
 
 .hero .accent { 
-    color: var(--accent); 
-    text-shadow: 0 0 20px rgba(255, 42, 42, 0.5); /* Неоновое свечение */
+    background: linear-gradient(135deg, #fff, var(--accent));
+    -webkit-background-clip: text;
+    background-clip:text;
+    -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
@@ -194,21 +193,22 @@ body.light .burger span { background: var(--text); }
 .btn {
     position: relative;
     display: inline-block;
-    background: var(--accent);
+    background: linear-gradient(135deg, #6a4cff, var(--accent));
     color: #fff;
     padding: 0.9rem 2rem;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
-    transition: transform 0.15s ease, box-shadow 0.2s, background 0.2s;
+    transition: transform 0.15s ease, box-shadow 0.2s, filter 0.2s;
     will-change: transform;
     z-index: 10;
-    box-shadow: 0 4px 15px rgba(255, 42, 42, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3);
+    border: none;
 }
 
 .btn:hover {
-    background: var(--accent-hover);
-    box-shadow: 0 8px 24px rgba(255, 42, 42, 0.6);
+    filter: brightness(1.1);
+    box-shadow: 0 8px 24px rgba(255, 51, 102, 0.6);
 }
 
 /* ========== ПЕЧАТАЮЩИЙСЯ ТЕКСТ ========== */
@@ -252,6 +252,7 @@ body.light .burger span { background: var(--text); }
     margin-bottom: 1.5rem;
     border-left: 4px solid var(--accent);
     padding-left: 15px;
+    text-shadow: 0 0 10px rgba(255, 51, 102, 0.3);
 }
 
 .section p { color: var(--muted); }
@@ -270,7 +271,7 @@ body.light .burger span { background: var(--text); }
     background: var(--card);
     padding: 2rem 1rem;
     border-radius: 12px;
-    border: 1px solid #333;
+    border: 1px solid var(--border);
     transition: transform 0.3s, border-color 0.3s;
 }
 
@@ -316,7 +317,7 @@ body.light .burger span { background: var(--text); }
 
 .skill-track {
     height: 8px;
-    background: #222;
+    background: var(--border);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -324,16 +325,16 @@ body.light .burger span { background: var(--text); }
 .skill-fill {
     height: 100%;
     width: 0;
-    background: linear-gradient(90deg, var(--accent), #ff6b6b);
+    background: linear-gradient(90deg, #6a4cff, var(--accent));
     border-radius: 4px;
     transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 10px rgba(255, 42, 42, 0.6);
+    box-shadow: 0 0 12px rgba(255, 51, 102, 0.5);
 }
 
 /* ========== ПРОЕКТЫ ========== */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
     margin-top: 2rem;
 }
@@ -348,24 +349,53 @@ body.light .burger span { background: var(--text); }
 
 .tilt-inner {
     background: var(--card);
-    padding: 1.5rem;
+    padding: 1.8rem;
     border-radius: 12px;
-    border: 1px solid #333;
+    border: 1px solid var(--border);
     transition: transform 0.1s ease, border-color 0.2s, box-shadow 0.2s;
     transform-style: preserve-3d;
     will-change: transform;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .tilt:hover .tilt-inner {
     border-color: var(--accent);
-    box-shadow: 0 10px 30px rgba(255, 42, 42, 0.15);
+    box-shadow: 0 10px 30px rgba(255, 51, 102, 0.15);
 }
 
-.tilt-inner h3 { transform: translateZ(30px); margin-bottom: 0.5rem; color: var(--text); }
-.tilt-inner p  { transform: translateZ(15px); margin-bottom: 1rem; font-size: 0.95rem; color: var(--muted); }
-.tilt-inner a  { transform: translateZ(30px); display: inline-block; color: var(--accent); text-decoration: none; font-weight: 600; }
+.tilt-inner h3 { transform: translateZ(30px); margin-bottom: 0.8rem; color: var(--text); font-size: 1.3rem; }
+.tilt-inner p  { transform: translateZ(15px); margin-bottom: 1.2rem; font-size: 0.95rem; color: var(--muted); flex-grow: 1; }
+.tilt-inner a  { transform: translateZ(30px); display: inline-block; color: var(--accent); text-decoration: none; font-weight: 600; margin-top: auto; }
 .tilt-inner a:hover { text-decoration: underline; }
+
+/* ========== ПЛАШКИ ТЕХНОЛОГИЙ ========== */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    transform: translateZ(20px);
+}
+
+.project-tags span {
+    background: rgba(255, 51, 102, 0.1);
+    color: var(--accent);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 51, 102, 0.3);
+    transition: all 0.2s ease;
+}
+
+.project-tags span:hover {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+    transform: translateY(-2px);
+}
 
 /* ========== КОНТАКТЫ ========== */
 .contacts {
@@ -381,17 +411,16 @@ body.light .burger span { background: var(--text); }
     padding: 0.8rem 2rem;
     border-radius: 6px;
     text-decoration: none;
-    border: 2px solid var(--accent); /* Красная рамка */
+    border: 2px solid var(--accent);
     font-weight: 600;
     font-size: 1rem;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(255, 42, 42, 0.2); /* Легкое свечение */
+    box-shadow: 0 0 10px rgba(255, 51, 102, 0.2);
     z-index: 1;
 }
 
-/* Эффект заливки при наведении */
 .contacts a::before {
     content: '';
     position: absolute;
@@ -408,20 +437,21 @@ body.light .burger span { background: var(--text); }
 
 .contacts a:hover {
     color: #fff;
-    box-shadow: 0 0 25px rgba(255, 42, 42, 0.6); /* Яркое свечение */
+    box-shadow: 0 0 25px rgba(255, 51, 102, 0.6);
     border-color: var(--accent-hover);
 }
 
 .contacts a:hover::before {
-    transform: scaleX(1); /* Заливает кнопку красным при наведении */
+    transform: scaleX(1);
 }
 
 /* ========== ФУТЕР ========== */
 footer {
     text-align: center;
-    padding: 2rem;
+    padding: 2rem 5%;
     color: var(--muted);
-    border-top: 1px solid #222;
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
 }
 
 /* ========== ПРОГРЕСС-БАР ========== */
@@ -431,7 +461,7 @@ footer {
     left: 0;
     height: 3px;
     width: 0%;
-    background: var(--accent);
+    background: linear-gradient(90deg, #6a4cff, var(--accent));
     z-index: 999;
     box-shadow: 0 0 10px var(--accent);
     transition: width 0.1s linear;
@@ -467,7 +497,7 @@ footer {
 .cursor-ring.hover {
     width: 50px;
     height: 50px;
-    background: rgba(255, 42, 42, 0.15);
+    background: rgba(255, 51, 102, 0.15);
 }
 
 /* ========== КНОПКА «НАВЕРХ» ========== */
@@ -478,16 +508,16 @@ footer {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--accent);
+    background: linear-gradient(135deg, #6a4cff, var(--accent));
     color: #fff;
     border: none;
     font-size: 1.3rem;
     opacity: 0;
     pointer-events: none;
     transform: translateY(20px);
-    transition: opacity 0.3s, transform 0.3s, background 0.2s;
+    transition: opacity 0.3s, transform 0.3s, filter 0.2s;
     z-index: 50;
-    box-shadow: 0 0 20px rgba(255, 42, 42, 0.5);
+    box-shadow: 0 0 20px rgba(255, 51, 102, 0.4);
 }
 
 .to-top.visible {
@@ -496,7 +526,7 @@ footer {
     transform: translateY(0);
 }
 
-.to-top:hover { background: var(--accent-hover); }
+.to-top:hover { filter: brightness(1.2); }
 
 /* ========== ТОСТ ========== */
 .toast {
@@ -504,14 +534,14 @@ footer {
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%) translateY(120%);
-    background: var(--accent);
+    background: linear-gradient(135deg, #6a4cff, var(--accent));
     color: #fff;
     padding: 0.9rem 1.8rem;
     border-radius: 8px;
     font-weight: 600;
     z-index: 500;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 20px rgba(255, 42, 42, 0.6);
+    box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
     pointer-events: none;
 }
 
@@ -519,7 +549,7 @@ footer {
 
 /* ========== МОБИЛЬНАЯ ВЕРСИЯ ========== */
 @media (max-width: 700px) {
-    *, *::before, *::after { cursor: auto !important; } /* Возвращаем курсор на телефонах */
+    *, *::before, *::after { cursor: auto !important; }
     .cursor-dot, .cursor-ring { display: none; }
 
     .burger { display: flex; }
@@ -538,7 +568,7 @@ footer {
         font-size: 1.2rem;
         transform: translateX(100%);
         transition: transform 0.3s ease;
-        border-left: 1px solid #333;
+        border-left: 1px solid var(--border);
         z-index: 150;
     }
 
@@ -547,31 +577,4 @@ footer {
 
     .section { padding: 3rem 6%; }
     .stats-section { padding: 3rem 6%; }
-}
-/* ========== ПЛАШКИ ТЕХНОЛОГИЙ ========== */
-.project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.project-tags span {
-    background: rgba(255, 42, 42, 0.1);
-    color: var(--accent);
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    border: 1px solid rgba(255, 42, 42, 0.3);
-    transition: all 0.2s ease;
-    display: inline-block; /* Важно, чтобы плашка облегала текст */
-}
-
-.project-tags span:hover {
-    background: var(--accent);
-    color: #fff;
-    box-shadow: 0 0 10px rgba(255, 42, 42, 0.5);
-    transform: translateY(-2px);
 }
