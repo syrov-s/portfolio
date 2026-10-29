@@ -479,14 +479,13 @@ footer {
     left: 0;
     pointer-events: none;
     z-index: 9999;
+    width: 6px;
+    height: 6px;
+    background: #fff;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: opacity 0.3s;
-    width: 8px;
-    height: 8px;
-    background: #fff;
-    box-shadow: 0 0 10px #fff;
-    mix-blend-mode: difference;
+    box-shadow: 0 0 10px #fff, 0 0 20px var(--accent);
+    transition: opacity 0.3s, width 0.3s, height 0.3s;
 }
 
 .cursor-ring {
@@ -494,23 +493,34 @@ footer {
     top: 0;
     left: 0;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 9998;
+    width: 36px;
+    height: 36px;
+    /* Убираем пунктир, делаем тонкую сплошную линию */
+    border: 1px solid rgba(255, 51, 102, 0.6); 
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: opacity 0.3s;
-    width: 40px;
-    height: 40px;
-    border: 1.5px dashed var(--accent);
-    background: rgba(255, 51, 102, 0.05);
-    transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s, opacity 0.3s;
+    transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s, opacity 0.3s;
+    /* Добавляем легкое свечение вокруг кольца */
+    box-shadow: 0 0 15px rgba(255, 51, 102, 0.2);
 }
 
+/* При наведении на кнопки и ссылки */
 .cursor-ring.hover {
-    width: 70px;
-    height: 70px;
-    border: 2px solid var(--accent);
+    width: 60px;
+    height: 60px;
     background: rgba(255, 51, 102, 0.1);
-    animation: spin 4s linear infinite;
+    border-color: var(--accent);
+    box-shadow: 0 0 25px rgba(255, 51, 102, 0.4);
+    /* Убираем вращение, чтобы не отвлекало, оставляем только плавное расширение */
+    animation: none; 
+}
+
+/* Делаем центральную точку чуть больше при наведении */
+.cursor-ring.hover ~ .cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
 }
 
 @keyframes spin {
