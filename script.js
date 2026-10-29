@@ -103,7 +103,7 @@ if (toTop) {
     });
 }
 
-// ========== КАСТОМНЫЙ КУРСОР ==========
+// ========== КАСТОМНЫЙ КУРСОР С ТРЕЙЛОМ ==========
 const cursorDot = document.getElementById('cursorDot');
 const cursorRing = document.getElementById('cursorRing');
 
@@ -111,6 +111,20 @@ if (cursorDot && cursorRing) {
     let mouseX = 0, mouseY = 0;
     let ringX = 0, ringY = 0;
     let isMouseMoving = false;
+    const trail = []; 
+
+    for (let i = 0; i < 5; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('cursor-dot');
+        dot.style.opacity = '0';
+        dot.style.width = '4px';
+        dot.style.height = '4px';
+        dot.style.background = 'var(--accent)';
+        dot.style.boxShadow = '0 0 8px var(--accent)';
+        dot.style.mixBlendMode = 'normal';
+        document.body.appendChild(dot);
+        trail.push({ el: dot, x: 0, y: 0 });
+    }
 
     document.addEventListener('mousemove', e => {
         mouseX = e.clientX;
@@ -119,6 +133,7 @@ if (cursorDot && cursorRing) {
         if (!isMouseMoving) {
             cursorDot.style.opacity = '1';
             cursorRing.style.opacity = '1';
+            trail.forEach(t => t.el.style.opacity = '0.6');
             isMouseMoving = true;
         }
         
@@ -126,18 +141,39 @@ if (cursorDot && cursorRing) {
         cursorDot.style.top = mouseY + 'px';
     });
 
-    function animateRing() {
+    function animateCursor() {
         ringX += (mouseX - ringX) * 0.15;
         ringY += (mouseY - ringY) * 0.15;
         cursorRing.style.left = ringX + 'px';
         cursorRing.style.top = ringY + 'px';
-        requestAnimationFrame(animateRing);
+
+        let prevX = ringX;
+        let prevY = ringY;
+        
+        trail.forEach((t, index) => {
+            t.x += (prevX - t.x) * 0.3;
+            t.y += (prevY - t.y) * 0.3;
+            t.el.style.left = t.x + 'px';
+            t.el.style.top = t.y + 'px';
+            prevX = t.x;
+            prevY = t.y;
+            
+            t.el.style.opacity = isMouseMoving ? (0.6 - index * 0.1) : 0;
+        });
+
+        requestAnimationFrame(animateCursor);
     }
-    animateRing();
+    animateCursor();
 
     document.querySelectorAll('a, button, .tilt').forEach(el => {
-        el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
-        el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+        el.addEventListener('mouseenter', () => {
+            cursorRing.classList.add('hover');
+            trail.forEach(t => t.el.style.background = '#fff');
+        });
+        el.addEventListener('mouseleave', () => {
+            cursorRing.classList.remove('hover');
+            trail.forEach(t => t.el.style.background = 'var(--accent)');
+        });
     });
 }
 
@@ -169,7 +205,6 @@ if (canvas) {
         stars.forEach(s => {
             ctx.beginPath();
             ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-            // Делаем искры чуть более розовыми в тон новому акценту
             ctx.fillStyle = 'rgba(255, 100, 150, ' + s.a + ')';
             ctx.fill();
             s.y += s.speed;

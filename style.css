@@ -7,13 +7,13 @@
 }
 
 :root {
-    --bg: #0b0c10;          /* Глубокий графитовый */
-    --card: #15171e;        /* Цвет карточек */
-    --text: #f4f4f5;        /* Мягкий белый */
-    --muted: #8b8e9d;       /* Серо-голубой для текста */
-    --accent: #ff3366;      /* Неоновый малиново-коралловый */
-    --accent-hover: #e62959;/* Темнее для наведения */
-    --border: #262936;      /* Мягкие рамки */
+    --bg: #0b0c10;          
+    --card: #15171e;        
+    --text: #f4f4f5;        
+    --muted: #8b8e9d;       
+    --accent: #ff3366;      
+    --accent-hover: #e62959;
+    --border: #262936;      
 }
 
 body {
@@ -41,6 +41,7 @@ body.light {
 
 body.light .navbar { background: rgba(248, 249, 250, 0.85); }
 body.light .burger span { background: var(--text); }
+body.light .theme-toggle { border-color: var(--border); }
 
 /* ========== НАВИГАЦИЯ ========== */
 .navbar {
@@ -178,7 +179,7 @@ body.light .burger span { background: var(--text); }
 .hero .accent { 
     background: linear-gradient(135deg, #fff, var(--accent));
     -webkit-background-clip: text;
-    background-clip:text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -397,7 +398,7 @@ body.light .burger span { background: var(--text); }
     transform: translateY(-2px);
 }
 
-/* ========== КОНТАКТЫ ========== */
+/* ========== КОНТАКТЫ (ЖИДКИЕ КНОПКИ) ========== */
 .contacts {
     display: flex;
     gap: 1.5rem;
@@ -406,43 +407,47 @@ body.light .burger span { background: var(--text); }
 }
 
 .contacts a {
-    background: transparent;
-    color: var(--text);
-    padding: 0.8rem 2rem;
-    border-radius: 6px;
-    text-decoration: none;
-    border: 2px solid var(--accent);
-    font-weight: 600;
-    font-size: 1rem;
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 50px; 
+    background: rgba(255, 51, 102, 0.05);
+    border: 1px solid rgba(255, 51, 102, 0.4);
     overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(255, 51, 102, 0.2);
     z-index: 1;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 0 15px rgba(255, 51, 102, 0.1);
 }
 
 .contacts a::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--accent);
+    bottom: -50px;
+    left: -50px;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(135deg, #6a4cff, var(--accent));
+    border-radius: 40%;
     z-index: -1;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
+    transform: scale(0) rotate(0deg);
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .contacts a:hover {
     color: #fff;
-    box-shadow: 0 0 25px rgba(255, 51, 102, 0.6);
-    border-color: var(--accent-hover);
+    border-color: transparent;
+    box-shadow: 0 10px 30px rgba(255, 51, 102, 0.4);
+    transform: translateY(-3px);
 }
 
 .contacts a:hover::before {
-    transform: scaleX(1);
+    transform: scale(1.2) rotate(180deg);
 }
 
 /* ========== ФУТЕР ========== */
@@ -467,8 +472,23 @@ footer {
     transition: width 0.1s linear;
 }
 
-/* ========== КАСТОМНЫЙ КУРСОР ========== */
-.cursor-dot,
+/* ========== КУРСОР-ПРИЦЕЛ С ТРЕЙЛОМ ========== */
+.cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    box-shadow: 0 0 10px #fff;
+    mix-blend-mode: difference;
+}
+
 .cursor-ring {
     position: fixed;
     top: 0;
@@ -478,26 +498,23 @@ footer {
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: opacity 0.3s;
-}
-
-.cursor-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
-    box-shadow: 0 0 10px var(--accent);
-}
-
-.cursor-ring {
-    width: 32px;
-    height: 32px;
-    border: 1.5px solid var(--accent);
-    transition: width 0.2s, height 0.2s, background 0.2s, opacity 0.3s;
+    width: 40px;
+    height: 40px;
+    border: 1.5px dashed var(--accent);
+    background: rgba(255, 51, 102, 0.05);
+    transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s, opacity 0.3s;
 }
 
 .cursor-ring.hover {
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 51, 102, 0.15);
+    width: 70px;
+    height: 70px;
+    border: 2px solid var(--accent);
+    background: rgba(255, 51, 102, 0.1);
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* ========== КНОПКА «НАВЕРХ» ========== */
