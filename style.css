@@ -548,3 +548,30 @@ footer {
     .section { padding: 3rem 6%; }
     .stats-section { padding: 3rem 6%; }
 }
+/* ========== ПЛАШКИ ТЕХНОЛОГИЙ ========== */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+}
+
+.project-tags span {
+    background: rgba(255, 42, 42, 0.1); /* Прозрачный красный фон */
+    color: var(--accent);               /* Ярко-красный текст */
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;                /* Округлые края */
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 42, 42, 0.3);
+    transition: all 0.2s ease;
+}
+
+/* Эффект при наведении на плашку (активность) */
+.project-tags span:hover {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(255, 42, 42, 0.5);
+    transform: translateY(-2px);
+}
